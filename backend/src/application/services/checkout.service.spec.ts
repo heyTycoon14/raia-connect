@@ -46,10 +46,12 @@ describe('CheckoutService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CheckoutService,
-        { provide: 'IProductRepository', useValue: productRepository },
-        { provide: 'IOrderRepository', useValue: orderRepository },
-        { provide: DataSource, useValue: dataSource },
+        {
+          provide: CheckoutService,
+          useFactory: () => {
+            return new CheckoutService(productRepository, orderRepository, dataSource);
+          },
+        },
       ],
     }).compile();
 
